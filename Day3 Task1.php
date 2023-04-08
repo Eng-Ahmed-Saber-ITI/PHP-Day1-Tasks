@@ -25,6 +25,7 @@
     <?php
     $nameErr = $emailErr = $genderErr = $agreeErr = "";
     $name = $email = $group = $class_details = $gender = $courses = $agree= "";
+    $selected_courses = array ();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // echo "<h2>Your Input:</h2>";
@@ -68,13 +69,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //   echo "<br>";
     }
 
-    if (empty($_POST["courses"])) {
-        $courses = "";
-      } else {
-        $courses = test_input($_POST["courses"]);
-        // echo "Your Courses are : ".$courses;
-        // echo "<br>";
-      }
+    if(isset($_POST['courses'])){
+        $selected_courses=$_POST['courses'];
+    } 
 
     if (empty($_POST["agree"])) {
       $agreeErr = "You must agree to terms";
@@ -135,11 +132,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <tr>
                 <td> <label for="courses">Select Courses:</label> </td>
                 <td>
-                    <select name="courses" id="courses" multiple>
-                        <option value="php">PHP</option>
-                        <option value="javascript">JavaScript</option>
-                        <option value="mysql">MySQL</option>
+                    <select name="courses[]" multiple>
                         <option value="html">HTML</option>
+                        <option value="Javascript">JavaScript</option>
+                        <option value="PHP">PHP</option>
+                        <option value="MySQL">MySQL</option>
                     </select>
                 </td>
             </tr>
@@ -181,9 +178,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     echo "Gender:".$gender;
                     echo "<br>";
                 }
-                if (!empty($_POST["courses"])) {
-                    echo "Your Courses are : ".$courses;
-                    echo "<br>";
+                if (!empty($_POST["courses"])) { 
+                    echo "Your Courses are : "."<br>";
+                    foreach($selected_courses as $course){
+                        echo $course."<br>";
+                    }                  
                 }
             ?>
         </div>
